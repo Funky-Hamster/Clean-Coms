@@ -1,2 +1,0 @@
-[24-Nov-2018 03:15:48 Australia/Sydney] PHP Fatal error:  Cannot redeclare App\Http\Controllers\UserController::cleaner() in /home4/aoxue/public_html/cce/app/Http/Controllers/UserController.php on line 126
-[24-Nov-2018 03:44:47 Australia/Sydney] PHP Fatal error:  Cannot use App\CompanyCustomer as CompanyCustomer because the name is already in use in /home4/aoxue/public_html/cce/app/Http/Controllers/UserController.php on line 11
