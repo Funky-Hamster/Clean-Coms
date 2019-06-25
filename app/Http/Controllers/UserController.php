@@ -52,7 +52,7 @@ class UserController extends Controller
     
     public function show(Request $request, $id) {
         $userInfo = User::where('id', $id)->where('is_deleted', 0)->first();
-        if(sizeof($userInfo) == 0){
+        if($userInfo == null){
             return array(
                 "code" => 404,
                 "info" => "No found"
