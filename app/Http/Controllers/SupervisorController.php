@@ -18,7 +18,10 @@ class SupervisorController extends Controller
             $cleaners = Cleaner::where('supervisor_id', $supervisor->id)->get();
             $cleanersInfo = [];
             foreach($cleaners as $cleaner) {
-                array_push($cleanersInfo, User::find($cleaner->cleaner_id));
+				$user = User::where('id', $cleaner->cleaner_id)->where('is_deleted', 0)->first();
+				if($user != null) {
+					array_push($cleanersInfo, user);
+				}
             }
             $supervisor->cleaners = $cleanersInfo;
         }
@@ -31,7 +34,7 @@ class SupervisorController extends Controller
     
     public function show(Request $request, $id) {
         $supervisor = User::where('id', $id)->where('type', 'supervisor')->where('is_deleted', 0)->first();
-        if(sizeof($supervisor) == 0){
+        if($supervisor == null){
             return array(
                 "code" => 404,
                 "info" => "No found"

@@ -34,7 +34,7 @@ class CleanerController extends Controller
     
     public function show(Request $request, $id) {
         $cleaner = User::where('id', $id)->where('type', 'cleaner')->where('is_deleted', 0)->first();
-        if(sizeof($cleaner) == 0){
+        if($cleaner == null){
             return array(
                 "code" => 404,
                 "info" => "找不到相关用户"

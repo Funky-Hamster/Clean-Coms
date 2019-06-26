@@ -13,21 +13,30 @@ use App\Comment;
 class CustomerController extends Controller
 {
     public function index(Request $request) {
-        if($request->is_deleted == 1) {
-            $customers = User::where('is_deleted', 1)->where('type', 'customer')->get();
-            foreach($customers as $customer) {
-                $customer->operator = User::find($customer->operator_id);
-            }
-            return array(
-                "info" => "",
-                "code" => 200,
-                "data" => $customers
-            );
-        }
+		if(isset($request->is_deleted)) {
+			if($request->is_deleted == 1) {
+				$customers = User::where('is_deleted', 1)->where('type', 'customer')->get();
+				foreach($customers as $customer) {
+					$customer->operator = User::find($customer->operator_id);
+				}
+				return array(
+					"info" => "",
+					"code" => 200,
+					"data" => $customers
+				);
+			}
+		}
+
         $customers = User::where('type', 'customer')->where('is_deleted', 0)->get();
         foreach($customers as $customer) {
-            $companyId = Customer::where('customer_id', $customer->id)->first()->company_id;
-            $customer->company = Company::find($companyId);
+            $customer = Customer::where('customer_id', $customer->id)->first();
+			if($customer != null) {
+				$company = Company::find($customer->company_id);
+				if($company != null) {
+					$customer->company = Company::find($companyId);
+				}
+			}
+            
         }
         return array(
             "info" => "",
@@ -38,7 +47,7 @@ class CustomerController extends Controller
     
     public function show(Request $request, $id) {
         $customer = User::where('id', $id)->where('type', 'customer')->where('is_deleted', 0)->first();
-        if(sizeof($customer) == 0){
+        if($customer == null){
             return array(
                 "code" => 404,
                 "info" => "No found"

@@ -55,7 +55,7 @@ class AdminController extends Controller
     public function show(Request $request, $id) {
         $admin = User::where('id', $id)->where('type', 'admin')->where('is_deleted', 0)->first();
         $admin->accountant = Admin::where('admin_id', $id)->first()->accountant;
-        if(sizeof($admin) == 0){
+        if($admin == null){
             return array(
                 "code" => 404,
                 "info" => "No found"
