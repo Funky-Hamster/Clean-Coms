@@ -33,7 +33,7 @@ class CustomerController extends Controller
 			if($customer != null) {
 				$company = Company::find($customer->company_id);
 				if($company != null) {
-					$customer->company = Company::find($companyId);
+					$customer->company = $company;
 				}
 			}
             
