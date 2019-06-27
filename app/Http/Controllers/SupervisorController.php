@@ -20,7 +20,7 @@ class SupervisorController extends Controller
             foreach($cleaners as $cleaner) {
 				$user = User::where('id', $cleaner->cleaner_id)->where('is_deleted', 0)->first();
 				if($user != null) {
-					array_push($cleanersInfo, user);
+					array_push($cleanersInfo, $user);
 				}
             }
             $supervisor->cleaners = $cleanersInfo;
