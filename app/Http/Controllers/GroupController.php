@@ -52,12 +52,18 @@ class GroupController extends Controller
         try {
             $group = Group::where('id', $id)->first();
             $groupMembers = GroupMember::where('group_id', $id)->select('user_id', 'type')->get();
+			$data = array();
             foreach ($groupMembers as $groupMember) {
-                $groupMember->user_info = User::where('id', $groupMember->user_id)->first();
+				$user = User::where('id', $groupMember->user_id)->where('is_deleted', 0)->first();
+                // $groupMember->user_info = User::where('id', $groupMember->user_id)->first();
+				if($user != null) {
+					$groupMember->user_info = $user;
+					array_push($data, $groupMember);
+				}
             }
             return array(
                 "code" => 200,
-                "data" => $groupMembers
+                "data" => $data
             );
         } catch (\Exception $e) {
             return array(
