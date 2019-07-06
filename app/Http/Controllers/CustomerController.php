@@ -75,7 +75,7 @@ class CustomerController extends Controller
         $companyId = Customer::where('customer_id', $userId)->first()->company_id;
         $cleanerId = Company::find($companyId)->cleaner_id;
         $cleaner = User::where('id', $cleanerId)->where('type', 'cleaner')->where('is_deleted', 0)->first();
-        if(sizeof($cleaner) == 0){
+        if($cleaner == null){
             return array(
                 "code" => 404,
                 "info" => "No found"
