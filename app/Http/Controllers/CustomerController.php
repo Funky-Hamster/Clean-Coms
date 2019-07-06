@@ -81,11 +81,11 @@ class CustomerController extends Controller
                 "info" => "No found"
             );
         }
-        $companies = Company::where('cleaner_id', $cleaner->id)->get();
-        $cleaner->companies = $companies;
-        $cleanerInfo = Cleaner::where('cleaner_id', $cleaner->id)->first();
-        $supervisorId = $cleanerInfo->supervisor_id;
-        $cleaner->supervisor = User::find($supervisorId);
+        // $companies = Company::where('cleaner_id', $cleaner->id)->get();
+        // $cleaner->companies = $companies;
+        // $cleanerInfo = Cleaner::where('cleaner_id', $cleaner->id)->first();
+        // $supervisorId = $cleanerInfo->supervisor_id;
+        // $cleaner->supervisor = User::find($supervisorId);
         $cleaner->images = Image::where('cleaner_id', $cleaner->id)->get();
         $cleaner->comments = Comment::where('cleaner_id', $cleaner->id)->get();
         return array(
