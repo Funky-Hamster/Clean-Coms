@@ -160,7 +160,7 @@ class CompanyController extends Controller
                 'cleaner_id' => isset($request->cleaner_id) ? $request->cleaner_id : 0,
                 'admin_id' => isset($request->admin_id) ? $request->admin_id : 1,
                 'cleaning_company_id' => isset($request->cleaning_company_id) ? $request->cleaning_company_id : 1,
-                'inspection_time' => isset($request->inspection_time) ? $request->inspection_time : '2018-01-01',
+                'inspection_time' => isset($request->inspection_time) ? $request->inspection_time : Carbon::now(),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);

@@ -58,6 +58,13 @@ class UserController extends Controller
                 "info" => "No found"
             );
         }
+		
+		if($userInfo->type == 'customer') {
+			$companyId = Customer::where('user_id', $id)->first()->company_id;
+			$cleaningCompanyId = Company::find($companyId)->cleaning_company_id;
+			userInfo->cleaning_company = CleaningCompany::find($cleaningCompanyId);
+		}
+		
         return array(
             "code" => 200,
             "info" => "",
@@ -184,7 +191,7 @@ class UserController extends Controller
         $user->title = isset($request->title) ? $request->title : $user->title;
         $user->username = isset($request->username) ? $request->username : $user->username;
         $user->updated_at = Carbon::now();
-        // try {
+        try {
             $user->save();
             // Update relationships
             if ($user->type == 'cleaner') {
@@ -212,12 +219,12 @@ class UserController extends Controller
                 $data->save();
             }
 
-        // } catch (\Exception $e) {
-        //     return array(
-        //         "info" => "修改失败",
-        //         "code" => 500,
-        //     );
-        // }
+        } catch (\Exception $e) {
+            return array(
+                "info" => "修改失败",
+                "code" => 500,
+            );
+        }
         return array(
             "info" => "",
             "code" => 200,

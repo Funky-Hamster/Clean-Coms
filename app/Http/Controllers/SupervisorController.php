@@ -40,7 +40,7 @@ class SupervisorController extends Controller
                 "info" => "No found"
             );
         }
-        $companies = Company::where('supervisor_id', $supervisor->id)->where('is_deleted', 0)->get();
+        $companies = Company::where('supervisor_id', $id)->where('is_deleted', 0)->get();
         $supervisor->companies = $companies;
         $managers = [];
         foreach($companies as $company) {
