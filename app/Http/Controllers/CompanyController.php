@@ -235,6 +235,13 @@ class CompanyController extends Controller
                 );
             }
         }
+		if($company->is_deleted == 1) {
+            return array(
+                "info" => "already deleted",
+                "code" => 500,
+            );
+		}
+		
         if(isset($request->delete)) {
             if($request->delete == 'lost_job') {
                 $company->delete_reason = 'lost_job';
@@ -246,17 +253,28 @@ class CompanyController extends Controller
                 );
             }
         }
+		
         if(!isset($request->user_id)) {
             return array(
                 "info" => "Unautorized deleting",
                 "code" => 500,
             );
         }
+
         $company->is_deleted = 1;
         $company->delete_reason = isset($request->delete_reason) ? $request->delete_reason : 'No reason';
         $company->updated_at = Carbon::now();
         $company->operator_id = $request->user_id;
         $company->save();
+		Note::insert([
+			'company_id' => $company->id,
+			'content' => $company->name,
+			'creator_id' => $request->user_id,
+			'supervisor_id' => $company->supervisor_id,
+			'cleaner_id' => $company->cleaner_id,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+		]);
         return array(
             "info" => "",
             "code" => 200,
