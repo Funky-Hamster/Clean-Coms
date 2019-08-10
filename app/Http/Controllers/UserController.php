@@ -60,7 +60,7 @@ class UserController extends Controller
         }
 		
 		if($userInfo->type == 'customer') {
-			$companyId = Customer::where('user_id', $id)->first()->company_id;
+			$companyId = Customer::where('customer_id', $id)->first()->company_id;
 			$cleaningCompanyId = Company::find($companyId)->cleaning_company_id;
 			$userInfo->cleaning_company = CleaningCompany::find($cleaningCompanyId);
 		}
