@@ -37,7 +37,7 @@ class UserController extends Controller
 					array_push($data, $user);
                 }
 				
-				$companies = Company::where('is_deleted', 1)->orderby('updated_at', 'desc')->where('delete_reason', '<>', 'lost_job')->get();
+				$companies = Company::where('is_deleted', '<>', 0)->where('delete_reason', '<>', 'lost_job')->orderby('updated_at', 'desc')->get();
 				foreach($companies as $company) {
 					$company->operator = User::find($company->operator_id);
 					array_push($data, $company);
