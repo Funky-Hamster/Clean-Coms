@@ -40,6 +40,7 @@ class UserController extends Controller
 				$companies = Company::where('is_deleted', '<>', 0)->where('delete_reason', '<>', 'lost_job')->orderby('updated_at', 'desc')->get();
 				foreach($companies as $company) {
 					$company->operator = User::find($company->operator_id);
+					$company->type = 'company';
 					array_push($data, $company);
 				}
                 
