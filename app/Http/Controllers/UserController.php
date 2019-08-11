@@ -29,16 +29,24 @@ class UserController extends Controller
         if(isset($request->is_deleted)) {
             if($request->is_deleted == 1) {
                 $users = User::where('is_deleted', 1)->whereIn('type', ['customer', 'supervisor'])->orderby('updated_at', 'desc')->get();
-                foreach($users as $user) {
+                $data = [];
+				foreach($users as $user) {
                     $user->operator = User::find($user->operator_id);
                     $user->type = $user->type == 'customer' ? 'manager' : $user->type;
                     $user->name = $user->name . ' (' . $user->type . ')';
+					array_push($data, $user);
                 }
+				
+				$companies = Company::where('is_deleted', 1)->orderby('updated_at', 'desc')->where('delete_reason' != 'lost_job')->get();
+				foreach($companies as $company) {
+					$company->operator = User::find($company->operator_id);
+					array_push($data, $company);
+				}
                 
                 return array(
                     "info" => "",
                     "code" => 200,
-                    "data" => $users
+                    "data" => $data
                 );
             }
         }

@@ -266,7 +266,7 @@ class CompanyController extends Controller
         $company->updated_at = Carbon::now();
         $company->operator_id = $request->user_id;
         $company->save();
-		Note::insert([
+		/* Note::insert([
 			'company_id' => $company->id,
 			'content' => $company->name,
 			'creator_id' => $request->user_id,
@@ -274,7 +274,7 @@ class CompanyController extends Controller
 			'cleaner_id' => $company->cleaner_id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
-		]);
+		]); */
         return array(
             "info" => "",
             "code" => 200,

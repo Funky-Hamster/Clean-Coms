@@ -191,6 +191,7 @@ class GroupController extends Controller
                 'updated_at' => Carbon::now()
             ]);
             array_push($members, $accountantId);
+			array_push($members, Admin::where('accountant', 1)->first()->admin_id;
             array_push($members, $userId);
             foreach($members as $member) {
                 GroupMember::insert([
