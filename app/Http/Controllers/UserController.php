@@ -42,7 +42,18 @@ class UserController extends Controller
 					$company->operator = User::find($company->operator_id);
 					$company->type = 'company';
 					array_push($data, $company);
-				}
+                }
+                
+                for($i = 0; $i < sizeof($data); $i++) {
+                    for($j = $i + 1; j < sizeof($data); $j++) {
+                        if($data[$i]->updated_at < $data[$j]->updated_at) {
+                            $temp = $data[$i];
+                            $data[$i] = $data[$j];
+                            $data[$j] = $temp;
+                        }
+                    }
+                    
+                }
                 
                 return array(
                     "info" => "",
