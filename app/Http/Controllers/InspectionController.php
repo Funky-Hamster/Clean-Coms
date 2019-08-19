@@ -70,7 +70,7 @@ class InspectionController extends Controller
             $company->inspection_time = Carbon::now()->addDays($company->duration);
             $company->save();
             $ret = Inspection::insertGetId([
-                'inspection_time' => $inspectionTime,
+                'inspection_time' => Carbon::now(),
                 'company_id' => $request->company_id,
                 'site_name' => $request->site_name,
                 'user_id' => isset($request->user_id) ? $request->user_id : 1,

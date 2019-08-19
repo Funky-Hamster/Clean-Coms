@@ -236,12 +236,19 @@ class UserController extends Controller
                 $data = Admin::where('admin_id', $id)->first();
                 $data->accountant = isset($request->accountant) ? $request->accountant : $accountantData->accountant;
                 $data->updated_at = Carbon::now();
+                if($data->accountant == 1) {
+                    $accountansRecords = Admin::all();
+                    foreach($accountansRecords as $ar) {
+                        $ar->accountant = 0;
+                        $ar->save();
+                    }
+                }
                 $data->save();
             }
 
         } catch (\Exception $e) {
             return array(
-                "info" => "修改失败",
+                "info" => "Edit failed",
                 "code" => 500,
             );
         }
