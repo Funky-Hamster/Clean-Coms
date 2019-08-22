@@ -14,7 +14,7 @@ class SupervisorController extends Controller
     public function index(Request $request) {
         $supervisors = User::where('type', 'supervisor')->where('is_deleted', 0)->get();
         foreach($supervisors as $supervisor) {
-            $supervisor->companies = Company::where('supervisor_id', $supervisor->id)->get();
+            $supervisor->companies = Company::where('supervisor_id', $supervisor->id)->where('is_deleted', 0)->get();
             $cleaners = Cleaner::where('supervisor_id', $supervisor->id)->get();
             $cleanersInfo = [];
             foreach($cleaners as $cleaner) {
